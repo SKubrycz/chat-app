@@ -1,0 +1,19 @@
+:root {
+  --bgColor: #0d2540;
+  --fontColor: #c9e3ff;
+  --linkColor: #218cff;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  font-family: 'Segoe UI', 'Fira Sans', sans-serif;
+  font-size: 15px;
+  color: var(--fontColor);
+  background-color: var(--bgColor);
+}
+
+a {
+  text-decoration: none;
+  color: var(--linkColor);
+}
