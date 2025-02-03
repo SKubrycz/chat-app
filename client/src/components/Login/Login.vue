@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { Button, InputText } from 'primevue'
+import Canvas from '../Canvas/Canvas.vue'
+import { Button, InputText, Password } from 'primevue'
 import { Form } from '@primevue/forms'
 </script>
 
 <template>
   <div class="content center-col">
+    <Canvas></Canvas>
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
     <Form>
-      <div>
+      <div class="center-col">
         <InputText name="username" type="text" placeholder="Username" fluid></InputText>
-        <Button type="submit" severity="secondary" label="Submit"></Button>
+        <Password placeholder="Password" :feedback="false" toggle-mask fluid></Password>
+        <Button type="submit" label="Login"></Button>
       </div>
     </Form>
     <div>go to <RouterLink to="/register">Register</RouterLink></div>
@@ -19,5 +22,10 @@ import { Form } from '@primevue/forms'
 <style scoped>
 h1 > a {
   color: var(--fontColor);
+}
+input,
+.p-password,
+button {
+  margin: 0.7em 0;
 }
 </style>

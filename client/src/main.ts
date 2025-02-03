@@ -26,6 +26,19 @@ const colors = {
 const customPreset = definePreset(Aura, {
   semantic: {
     primary: colors,
+    colorScheme: {
+      light: {
+        formField: {
+          hoverBorderColor: '{primary.color}',
+        },
+      },
+      dark: {
+        formField: {
+          background: '{blue.950}',
+          hoverBorderColor: '{primary.color}',
+        },
+      },
+    },
   },
 })
 

@@ -1,11 +1,13 @@
 :root {
-  --bgColor: #0d2540;
-  --fontColor: #c9e3ff;
-  --linkColor: #218cff;
+  --bgColor: #172554; /*#0d2540;*/
+  --fontColor: #dbeafe; /*#c9e3ff;*/
+  --linkColor: #3b82f6; /*#218cff;*/
 }
 
 body {
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
   line-height: 1.6;
   font-family: 'Segoe UI', 'Fira Sans', sans-serif;
   font-size: 15px;

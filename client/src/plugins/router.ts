@@ -1,7 +1,7 @@
 import Home from '@/components/Home/Home.vue'
 import Login from '@/components/Login/Login.vue'
 import Register from '@/components/Register/Register.vue'
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   { path: '/', component: Home },
@@ -10,6 +10,6 @@ const routes = [
 ]
 
 export const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHashHistory(),
   routes,
 })
