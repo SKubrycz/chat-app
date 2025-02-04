@@ -4,8 +4,8 @@ import { Button } from 'primevue'
 </script>
 
 <template>
-  <div class="content center-col">
-    <Canvas></Canvas>
+  <Canvas></Canvas>
+  <div class="center-col come-up">
     <h1>Chat app</h1>
     <div>
       <RouterLink to="/login">Login</RouterLink>
@@ -14,3 +14,5 @@ import { Button } from 'primevue'
     </div>
   </div>
 </template>
+
+<style scoped></style>

@@ -5,8 +5,8 @@ import { Button, InputText, Password } from 'primevue'
 </script>
 
 <template>
-  <div class="content center-col">
-    <Canvas></Canvas>
+  <Canvas></Canvas>
+  <div class="center-col come-up">
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
     <Form>
       <div class="center-col">
