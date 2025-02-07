@@ -28,7 +28,7 @@ const height = ref(window.innerHeight)
 const canvas = ref<HTMLCanvasElement | null>(null)
 const circles = ref<Circle[]>([])
 let circlesCount = 0
-const speedMultiplier = 15
+const speedMultiplier = 12
 
 let previousDelta = 0
 const fps = 30
@@ -115,14 +115,14 @@ const draw = () => {
 }
 
 onMounted(() => {
-  for (let i = 0; i < 20; i++) {
-    const r = 300
+  for (let i = 0; i < 8; i++) {
+    const r = 400
     const x = Math.floor(Math.random() * width.value)
     const y = Math.floor(Math.random() * height.value)
     const color: Color = {
       r: Math.floor(Math.random() * 60),
-      g: Math.floor(Math.random() * 60),
-      b: 100 + Math.floor(Math.random() * 50),
+      g: Math.floor(Math.random() * 20),
+      b: 60 + Math.floor(Math.random() * 160),
       a: 1.0,
     }
     createCircle(x, y, r, color)
@@ -133,8 +133,8 @@ onMounted(() => {
       const { direction } = el
       const { dx, dy } = direction
       const arr = checkCollision(el.x, el.y, dx, dy)
-      el.x = arr[0] //1 * multiplier - Math.random() * 2 * multiplier
-      el.y = arr[1] //1 * multiplier - Math.random() * 2 * multiplier
+      el.x = arr[0]
+      el.y = arr[1]
       el.direction.dx = arr[2]
       el.direction.dy = arr[3]
 
