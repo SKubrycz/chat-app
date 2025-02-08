@@ -33,11 +33,6 @@ const speedMultiplier = 12
 let previousDelta = 0
 const fps = 30
 
-const drawRect = (ctx: CanvasRenderingContext2D) => {
-  ctx.fillStyle = 'transparent'
-  ctx.fillRect(0, 0, width.value, height.value)
-}
-
 const createCircle = (x: number, y: number, r: number, color: Color) => {
   const direction: Direction = {
     dx: Math.random() * 2 - 1,
@@ -115,6 +110,11 @@ const draw = () => {
 }
 
 onMounted(() => {
+  window.addEventListener('resize', () => {
+    width.value = window.innerWidth
+    height.value = window.innerHeight
+  })
+
   for (let i = 0; i < 8; i++) {
     const r = 400
     const x = Math.floor(Math.random() * width.value)
