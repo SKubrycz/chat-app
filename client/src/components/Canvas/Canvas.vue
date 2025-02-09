@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { readCanvasSettings, writeCanvasSettings } from '@/plugins/canvasSetting'
+import { onMounted, ref, watch } from 'vue'
+import { Checkbox } from 'primevue'
 
 interface Circle {
   id: number
@@ -25,8 +27,11 @@ interface Direction {
 const width = ref(window.innerWidth)
 const height = ref(window.innerHeight)
 
+const checked = ref<boolean>(true)
+
 const canvas = ref<HTMLCanvasElement | null>(null)
 const circles = ref<Circle[]>([])
+const interval = ref<number | null>(null)
 let circlesCount = 0
 const speedMultiplier = 12
 
@@ -90,7 +95,7 @@ const checkCollision = (x: number, y: number, dx: number, dy: number) => {
 
 const draw = () => {
   const ctx = canvas.value?.getContext('2d')
-  if (ctx) {
+  if (ctx && checked.value) {
     window.requestAnimationFrame(draw)
 
     let currentDelta = performance.now()
@@ -109,11 +114,16 @@ const draw = () => {
   }
 }
 
-onMounted(() => {
-  window.addEventListener('resize', () => {
-    width.value = window.innerWidth
-    height.value = window.innerHeight
-  })
+const runAnimation = () => {
+  if (interval.value) clearInterval(interval.value)
+  if (!checked.value) {
+    const ctx = canvas?.value?.getContext('2d')
+    if (ctx) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.0)'
+      ctx.clearRect(0, 0, width.value, height.value)
+    }
+    return
+  }
 
   for (let i = 0; i < 8; i++) {
     const r = 400
@@ -128,7 +138,7 @@ onMounted(() => {
     createCircle(x, y, r, color)
   }
 
-  const interval = setInterval(() => {
+  interval.value = setInterval(() => {
     circles.value.forEach((el) => {
       const { direction } = el
       const { dx, dy } = direction
@@ -144,11 +154,40 @@ onMounted(() => {
   }, 1000 / fps)
 
   draw()
+}
+
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    width.value = window.innerWidth
+    height.value = window.innerHeight
+  })
+
+  const runCanvas = readCanvasSettings()
+  console.log(runCanvas)
+  if (runCanvas !== null) checked.value = runCanvas
+
+  runAnimation()
+})
+
+watch(checked, (newChecked) => {
+  writeCanvasSettings(Boolean(newChecked))
+  runAnimation()
 })
 </script>
 
 <template>
   <canvas :width="width" :height="height" ref="canvas"></canvas>
+  <div
+    :style="{
+      width: `fit-content`,
+      position: `absolute`,
+      top: `90%`,
+      left: `90%`,
+    }"
+  >
+    Toggle background animation
+    <Checkbox v-model="checked" binary></Checkbox>
+  </div>
 </template>
 
 <style scoped>
