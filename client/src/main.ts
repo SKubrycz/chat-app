@@ -6,6 +6,7 @@ import App from './App.vue'
 import { router } from './plugins/router'
 import { definePreset } from '@primevue/themes'
 import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice'
 import Aura from '@primevue/themes/aura'
 
 const primary = 'blue'
@@ -49,4 +50,5 @@ app.use(PrimeVue, {
     preset: customPreset,
   },
 })
+app.use(ToastService)
 app.mount('#app')

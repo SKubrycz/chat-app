@@ -163,7 +163,6 @@ onMounted(() => {
   })
 
   const runCanvas = readCanvasSettings()
-  console.log(runCanvas)
   if (runCanvas !== null) checked.value = runCanvas
 
   runAnimation()
