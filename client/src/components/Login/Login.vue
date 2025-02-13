@@ -1,37 +1,13 @@
 <script setup lang="ts">
 import Canvas from '../Canvas/Canvas.vue'
+import { handleToast } from '@/plugins/handleToast'
 import { Button, InputText, Password } from 'primevue'
 import { Form } from '@primevue/forms'
 
 const emit = defineEmits(['showToast'])
 
-const handleToast = (severity: string, status: number, message: string) => {
-  if (status < 400) {
-    emit('showToast', {
-      severity: severity,
-      summary: 'Information',
-      detail: message,
-      life: 3000,
-    })
-  } else if (status >= 300 && status < 400) {
-    emit('showToast', {
-      severity: severity,
-      summary: 'Warning',
-      detail: message,
-      life: 3000,
-    })
-  } else if (status >= 400) {
-    emit('showToast', {
-      severity: severity,
-      summary: 'Error',
-      detail: message,
-      life: 3000,
-    })
-  }
-}
-
 const onFormSubmit = () => {
-  handleToast('info', 200, 'Hello') // test
+  handleToast(emit, 200, 'info', 'Information', 'Hello') // test
 }
 </script>
 
