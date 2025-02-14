@@ -1,13 +1,36 @@
 <script setup lang="ts">
 import Canvas from '../Canvas/Canvas.vue'
-import { handleToast } from '@/plugins/handleToast'
-import { Button, InputText, Password } from 'primevue'
+import { handleToast } from '@/plugins/AlertToast/handleToast'
+import { Button, InputText, Password, type ToastMessageOptions } from 'primevue'
 import { Form } from '@primevue/forms'
+import { ref } from 'vue'
+import AlertToast from '../Info/AlertToast.vue'
 
-const emit = defineEmits(['showToast'])
+const toastPayload = ref<ToastMessageOptions | null>(null)
 
-const onFormSubmit = () => {
-  handleToast(emit, 200, 'info', 'Information', 'Hello') // test
+const handleShowToast = (payload: ToastMessageOptions) => {
+  toastPayload.value = payload
+}
+
+const onFormSubmit = async () => {
+  try {
+    const res = await fetch(import.meta.env.VITE_API_URL)
+    if (!res || !res.ok) {
+      handleToast(handleShowToast, res.status, 'error', 'Error', 'The data could not be fetched')
+      throw new Error(`Status: ${res.status}`)
+    }
+    if (!res.ok) {
+      const json = await res.json()
+      handleToast(handleShowToast, res.status, null, null, json)
+    }
+
+    if (res.ok) handleToast(handleShowToast, res.status)
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message)
+      handleToast(handleShowToast, 500, null, 'Error', error.message)
+    }
+  }
 }
 </script>
 
@@ -24,6 +47,7 @@ const onFormSubmit = () => {
     </Form>
     <div>go to <RouterLink to="/register">Register</RouterLink></div>
   </div>
+  <AlertToast :toast-payload="toastPayload"></AlertToast>
 </template>
 
 <style scoped>

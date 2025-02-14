@@ -29,9 +29,14 @@ writeText(subtitle, 0)
     <h1>Chat app</h1>
     <h2>{{ `${currentSubtitle}${currentSubtitle.length < subtitle.length ? '|' : ''}` }}</h2>
     <h3>Join us:</h3>
-    <Button variant="outlined" id="register-button" :raised="true"
-      ><RouterLink to="/register" id="register-link">Register</RouterLink></Button
-    >
+    <Button
+      as="router-link"
+      label="Register"
+      variant="outlined"
+      id="register-link"
+      to="/register"
+      :raised="true"
+    ></Button>
     <div :style="{ margin: 0, padding: 0 }">
       or
       <RouterLink to="/login">Login</RouterLink>
