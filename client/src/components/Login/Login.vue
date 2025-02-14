@@ -7,12 +7,14 @@ import { ref } from 'vue'
 import AlertToast from '../Info/AlertToast.vue'
 
 const toastPayload = ref<ToastMessageOptions | null>(null)
+const loading = ref<boolean>(false)
 
 const handleShowToast = (payload: ToastMessageOptions) => {
   toastPayload.value = payload
 }
 
 const onFormSubmit = async () => {
+  loading.value = true
   try {
     const res = await fetch(import.meta.env.VITE_API_URL)
     if (!res || !res.ok) {
@@ -31,6 +33,8 @@ const onFormSubmit = async () => {
       handleToast(handleShowToast, 500, null, 'Error', error.message)
     }
   }
+
+  loading.value = false
 }
 </script>
 
@@ -42,7 +46,7 @@ const onFormSubmit = async () => {
       <div class="center-col">
         <InputText name="username" type="text" placeholder="Username" fluid required></InputText>
         <Password placeholder="Password" :feedback="false" toggle-mask fluid required></Password>
-        <Button type="submit" label="Login"></Button>
+        <Button type="submit" label="Login" :loading="loading"></Button>
       </div>
     </Form>
     <div>go to <RouterLink to="/register">Register</RouterLink></div>
