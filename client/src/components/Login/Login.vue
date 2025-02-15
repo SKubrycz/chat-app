@@ -16,21 +16,23 @@ const handleShowToast = (payload: ToastMessageOptions) => {
 const onFormSubmit = async () => {
   loading.value = true
   try {
-    const res = await fetch(import.meta.env.VITE_API_URL)
+    const res = await fetch(import.meta.env.VITE_API_URL, {
+      method: 'POST',
+    })
     if (!res || !res.ok) {
-      handleToast(handleShowToast, res.status, 'error', 'Error', 'The data could not be fetched')
+      handleToast(handleShowToast, res.status, 'The data could not be fetched')
       throw new Error(`Status: ${res.status}`)
     }
     if (!res.ok) {
       const json = await res.json()
-      handleToast(handleShowToast, res.status, null, null, json)
+      handleToast(handleShowToast, res.status, json)
     }
 
     if (res.ok) handleToast(handleShowToast, res.status)
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message)
-      handleToast(handleShowToast, 500, null, 'Error', error.message)
+      handleToast(handleShowToast, 500, error.message)
     }
   }
 

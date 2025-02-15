@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Button } from 'primevue'
+import { onMounted, ref } from 'vue'
+import { Button, type ToastMessageOptions } from 'primevue'
 
 import Canvas from '../Canvas/Canvas.vue'
+import AlertToast from '../Info/AlertToast.vue'
+import { handleToast } from '@/plugins/AlertToast/handleToast'
+
+const toastPayload = ref<ToastMessageOptions | null>(null)
 
 const currentSubtitle = ref<string>('')
 const timeout = ref<number | null>(null)
 const subtitle = 'Connect, discuss, explore'
+
+const handleShowToast = (payload: ToastMessageOptions) => {
+  toastPayload.value = payload
+}
 
 const writeText = (source: string, currentIndex: number) => {
   if (timeout.value) clearTimeout(timeout.value)
@@ -20,7 +28,26 @@ const writeText = (source: string, currentIndex: number) => {
   }
 }
 
-writeText(subtitle, 0)
+const getHello = async () => {
+  try {
+    const res = await fetch(import.meta.env.VITE_API_URL, { method: 'GET' })
+    if (!res) {
+      handleToast(handleShowToast, 500, 'Could not fetch data')
+      throw new Error('Could not fetch data')
+    }
+    if (res) {
+      const json = await res.json()
+      handleToast(handleShowToast, res.status, json.message)
+    }
+  } catch (error) {
+    if (error instanceof Error) console.error(error.message)
+  }
+}
+
+onMounted(() => {
+  writeText(subtitle, 0)
+  getHello()
+})
 </script>
 
 <template>
@@ -42,6 +69,7 @@ writeText(subtitle, 0)
       <RouterLink to="/login">Login</RouterLink>
     </div>
   </div>
+  <AlertToast :toast-payload="toastPayload"></AlertToast>
 </template>
 
 <style scoped>

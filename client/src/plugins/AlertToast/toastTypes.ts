@@ -1,3 +1,4 @@
 import type { ToastMessageOptions } from 'primevue'
 
-export type Severity = ToastMessageOptions['severity'] // 'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast' | undefined;
+export type Severity = ToastMessageOptions['severity']
+export type Summary = ToastMessageOptions['summary']
