@@ -3,7 +3,7 @@ import Canvas from '../Canvas/Canvas.vue'
 import { handleToast } from '@/plugins/AlertToast/handleToast'
 import { Button, InputText, Password, type ToastMessageOptions } from 'primevue'
 import { Form } from '@primevue/forms'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import AlertToast from '../Info/AlertToast.vue'
 
 const toastPayload = ref<ToastMessageOptions | null>(null)
@@ -11,6 +11,25 @@ const loading = ref<boolean>(false)
 
 const handleShowToast = (payload: ToastMessageOptions) => {
   toastPayload.value = payload
+}
+
+const getLogin = async () => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, { method: 'GET' })
+    if (!res) {
+      handleToast(handleShowToast, 500, 'Could not fetch data')
+      throw new Error('Could not fetch data')
+    }
+    if (res) {
+      const json = await res.json()
+      handleToast(handleShowToast, res.status, json.message)
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message)
+      handleToast(handleShowToast, 500, error.message)
+    }
+  }
 }
 
 const onFormSubmit = async () => {
@@ -38,6 +57,10 @@ const onFormSubmit = async () => {
 
   loading.value = false
 }
+
+onMounted(() => {
+  getLogin()
+})
 </script>
 
 <template>

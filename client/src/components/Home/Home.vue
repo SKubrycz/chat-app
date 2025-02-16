@@ -40,7 +40,10 @@ const getHello = async () => {
       handleToast(handleShowToast, res.status, json.message)
     }
   } catch (error) {
-    if (error instanceof Error) console.error(error.message)
+    if (error instanceof Error) {
+      console.error(error.message)
+      handleToast(handleShowToast, 500, error.message)
+    }
   }
 }
 
