@@ -32,22 +32,20 @@ const getLogin = async () => {
   }
 }
 
-const onFormSubmit = async () => {
+const postLogin = async () => {
   loading.value = true
   try {
-    const res = await fetch(import.meta.env.VITE_API_URL, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: 'POST',
     })
     if (!res || !res.ok) {
       handleToast(handleShowToast, res.status, 'The data could not be fetched')
       throw new Error(`Status: ${res.status}`)
     }
-    if (!res.ok) {
+    if (res) {
       const json = await res.json()
-      handleToast(handleShowToast, res.status, json)
+      handleToast(handleShowToast, res.status, json.message)
     }
-
-    if (res.ok) handleToast(handleShowToast, res.status)
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message)
@@ -67,7 +65,7 @@ onMounted(() => {
   <Canvas></Canvas>
   <div class="center-col come-up">
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
-    <Form v-slot="$form" @submit="onFormSubmit">
+    <Form v-slot="$form" @submit="postLogin">
       <div class="center-col">
         <InputText name="username" type="text" placeholder="Username" fluid required></InputText>
         <Password placeholder="Password" :feedback="false" toggle-mask fluid required></Password>

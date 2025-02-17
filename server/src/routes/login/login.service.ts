@@ -6,4 +6,7 @@ export class LoginService {
   getLogin(): Message {
     return { message: "Hello from login" };
   }
+  postLogin(): Message {
+    return { message: "Posted @ /login" };
+  }
 }

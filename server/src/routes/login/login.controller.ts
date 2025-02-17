@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Post } from "@nestjs/common";
 import { LoginService } from "./login.service";
 import type { Message } from "src/types/routes";
 
@@ -9,5 +9,10 @@ export class LoginController {
   @Get()
   getLogin(): Message {
     return this.loginService.getLogin();
+  }
+
+  @Post()
+  postLogin(): Message {
+    return this.loginService.postLogin();
   }
 }
