@@ -6,10 +6,19 @@ import { Form } from '@primevue/forms'
 import { onMounted, ref } from 'vue'
 import AlertToast from '../Info/AlertToast.vue'
 
+interface LoginForm {
+  login: string
+  password: string
+}
+
 const toastPayload = ref<ToastMessageOptions | null>(null)
 const loading = ref<boolean>(false)
+const loginForm = ref<LoginForm>({
+  login: '',
+  password: '',
+})
 
-const handleShowToast = (payload: ToastMessageOptions) => {
+const setToast = (payload: ToastMessageOptions) => {
   toastPayload.value = payload
 }
 
@@ -17,17 +26,17 @@ const getLogin = async () => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, { method: 'GET' })
     if (!res) {
-      handleToast(handleShowToast, 500, 'Could not fetch data')
+      handleToast(setToast, 500, 'Could not fetch data')
       throw new Error('Could not fetch data')
     }
     if (res) {
       const json = await res.json()
-      handleToast(handleShowToast, res.status, json.message)
+      handleToast(setToast, res.status, json.message)
     }
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message)
-      handleToast(handleShowToast, 500, error.message)
+      handleToast(setToast, 500, error.message)
     }
   }
 }
@@ -35,21 +44,26 @@ const getLogin = async () => {
 const postLogin = async () => {
   loading.value = true
   try {
+    console.log(loginForm)
     const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: 'POST',
+      body: JSON.stringify(loginForm.value),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
     if (!res || !res.ok) {
-      handleToast(handleShowToast, res.status, 'The data could not be fetched')
+      handleToast(setToast, res.status, 'The data could not be fetched')
       throw new Error(`Status: ${res.status}`)
     }
     if (res) {
       const json = await res.json()
-      handleToast(handleShowToast, res.status, json.message)
+      handleToast(setToast, res.status, json.message)
     }
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message)
-      handleToast(handleShowToast, 500, error.message)
+      handleToast(setToast, 500, error.message)
     }
   }
 
@@ -65,10 +79,17 @@ onMounted(() => {
   <Canvas></Canvas>
   <div class="center-col come-up">
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
-    <Form v-slot="$form" @submit="postLogin">
+    <Form v-slot="$form" :initial-values="loginForm" @submit="postLogin">
       <div class="center-col">
-        <InputText name="username" type="text" placeholder="Username" fluid required></InputText>
-        <Password placeholder="Password" :feedback="false" toggle-mask fluid required></Password>
+        <InputText name="login" type="text" placeholder="Username" fluid required></InputText>
+        <Password
+          name="password"
+          placeholder="Password"
+          :feedback="false"
+          toggle-mask
+          fluid
+          required
+        ></Password>
         <Button type="submit" label="Login" :loading="loading"></Button>
       </div>
     </Form>

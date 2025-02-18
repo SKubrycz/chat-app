@@ -12,7 +12,7 @@ const currentSubtitle = ref<string>('')
 const timeout = ref<number | null>(null)
 const subtitle = 'Connect, discuss, explore'
 
-const handleShowToast = (payload: ToastMessageOptions) => {
+const setToast = (payload: ToastMessageOptions) => {
   toastPayload.value = payload
 }
 
@@ -32,17 +32,17 @@ const getHello = async () => {
   try {
     const res = await fetch(import.meta.env.VITE_API_URL, { method: 'GET' })
     if (!res) {
-      handleToast(handleShowToast, 500, 'Could not fetch data')
+      handleToast(setToast, 500, 'Could not fetch data')
       throw new Error('Could not fetch data')
     }
     if (res) {
       const json = await res.json()
-      handleToast(handleShowToast, res.status, json.message)
+      handleToast(setToast, res.status, json.message)
     }
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message)
-      handleToast(handleShowToast, 500, error.message)
+      handleToast(setToast, 500, error.message)
     }
   }
 }
