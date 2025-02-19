@@ -4,7 +4,6 @@ import { Button, type ToastMessageOptions } from 'primevue'
 
 import Canvas from '../Canvas/Canvas.vue'
 import AlertToast from '../Info/AlertToast.vue'
-import { handleToast } from '@/plugins/AlertToast/handleToast'
 
 const toastPayload = ref<ToastMessageOptions | null>(null)
 
@@ -28,28 +27,8 @@ const writeText = (source: string, currentIndex: number) => {
   }
 }
 
-const getHello = async () => {
-  try {
-    const res = await fetch(import.meta.env.VITE_API_URL, { method: 'GET' })
-    if (!res) {
-      handleToast(setToast, 500, 'Could not fetch data')
-      throw new Error('Could not fetch data')
-    }
-    if (res) {
-      const json = await res.json()
-      handleToast(setToast, res.status, json.message)
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message)
-      handleToast(setToast, 500, error.message)
-    }
-  }
-}
-
 onMounted(() => {
   writeText(subtitle, 0)
-  getHello()
 })
 </script>
 

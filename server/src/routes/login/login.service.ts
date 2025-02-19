@@ -8,6 +8,8 @@ export class LoginService {
     return { message: "Hello from login" };
   }
   postLogin(userLoginDto: UserLoginDto): Message {
-    return { message: `Posted @ /login: ${userLoginDto.login}` };
+    return {
+      message: `Posted @ /login: ${userLoginDto.login}, ${userLoginDto.password}`,
+    };
   }
 }

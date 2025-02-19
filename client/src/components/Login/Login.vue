@@ -44,7 +44,6 @@ const getLogin = async () => {
 const postLogin = async () => {
   loading.value = true
   try {
-    console.log(loginForm)
     const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: 'POST',
       body: JSON.stringify(loginForm.value),
@@ -81,8 +80,16 @@ onMounted(() => {
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
     <Form v-slot="$form" :initial-values="loginForm" @submit="postLogin">
       <div class="center-col">
-        <InputText name="login" type="text" placeholder="Username" fluid required></InputText>
+        <InputText
+          v-model="loginForm.login"
+          name="login"
+          type="text"
+          placeholder="Username"
+          fluid
+          required
+        ></InputText>
         <Password
+          v-model="loginForm.password"
           name="password"
           placeholder="Password"
           :feedback="false"
