@@ -13,7 +13,7 @@ export class LoginController {
   }
 
   @Post()
-  postLogin(@Body() userLoginDto: UserLoginDto): Message {
+  async postLogin(@Body() userLoginDto: UserLoginDto) {
     return this.loginService.postLogin(userLoginDto);
   }
 }
