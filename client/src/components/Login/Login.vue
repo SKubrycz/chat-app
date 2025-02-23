@@ -51,9 +51,8 @@ const postLogin = async () => {
         'Content-Type': 'application/json',
       },
     })
-    if (!res || !res.ok) {
-      handleToast(setToast, res.status, 'The data could not be fetched')
-      throw new Error(`Status: ${res.status}`)
+    if (!res) {
+      throw new Error(`Could not fetch data`)
     }
     if (res) {
       const json = await res.json()
