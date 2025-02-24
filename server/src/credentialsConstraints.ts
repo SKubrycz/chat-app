@@ -1,4 +1,2 @@
-export class CredentialsConstraints {
-  minLoginLength = 3;
-  minPasswordLength = 8;
-}
+export const MIN_LOGIN_LENGTH = 3;
+export const MIN_PASSWORD_LENGTH = 8;

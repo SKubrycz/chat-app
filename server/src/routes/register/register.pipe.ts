@@ -6,7 +6,10 @@ import {
 } from "@nestjs/common";
 import { UserRegisterDto } from "./register.dto";
 import { plainToInstance } from "class-transformer";
-import { CredentialsConstraints } from "src/credentialsConstraints";
+import {
+  MIN_LOGIN_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from "src/credentialsConstraints";
 
 @Injectable()
 export class ValidRegisterPipe implements PipeTransform {
@@ -16,19 +19,18 @@ export class ValidRegisterPipe implements PipeTransform {
     }
     const object = plainToInstance(metatype, value);
     const { login, password, passwordAgain } = object;
-    const constraints = new CredentialsConstraints();
 
-    if (login.length < constraints.minLoginLength)
+    if (login.length < MIN_LOGIN_LENGTH)
       throw new BadRequestException(
-        `Username must be longer than ${constraints.minLoginLength - 1} characters`
+        `Username must be longer than ${MIN_LOGIN_LENGTH - 1} characters`
       );
-    if (password.length < constraints.minPasswordLength)
+    if (password.length < MIN_PASSWORD_LENGTH)
       throw new BadRequestException(
-        `Password must be longer than ${constraints.minPasswordLength - 1} characters`
+        `Password must be longer than ${MIN_PASSWORD_LENGTH - 1} characters`
       );
-    if (passwordAgain.length < constraints.minPasswordLength)
+    if (passwordAgain.length < MIN_PASSWORD_LENGTH)
       throw new BadRequestException(
-        `Repeated password must be longer than ${constraints.minPasswordLength - 1} characters`
+        `Repeated password must be longer than ${MIN_PASSWORD_LENGTH - 1} characters`
       );
     if (password !== passwordAgain)
       throw new BadRequestException("Passwords are not the same");

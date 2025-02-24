@@ -5,7 +5,10 @@ import {
 } from "@nestjs/common";
 import { UserLoginDto } from "./login.dto";
 import { plainToInstance } from "class-transformer";
-import { CredentialsConstraints } from "src/credentialsConstraints";
+import {
+  MIN_LOGIN_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from "src/credentialsConstraints";
 
 export class ValidLoginPipe implements PipeTransform {
   transform(value: UserLoginDto, { metatype }: ArgumentMetadata) {
@@ -15,14 +18,13 @@ export class ValidLoginPipe implements PipeTransform {
 
     const object = plainToInstance(metatype, value);
     const { login, password } = object;
-    const constraints = new CredentialsConstraints();
-    if (login.length < constraints.minLoginLength)
+    if (login.length < MIN_LOGIN_LENGTH)
       throw new BadRequestException(
-        "Username must be longer than 3 characters"
+        `Username must be longer than ${MIN_LOGIN_LENGTH - 1} characters`
       );
-    if (password.length < constraints.minPasswordLength)
+    if (password.length < MIN_PASSWORD_LENGTH)
       throw new BadRequestException(
-        "Password must be longer than 7 characters"
+        `Password must be longer than ${MIN_PASSWORD_LENGTH - 1} characters`
       );
 
     return value;
