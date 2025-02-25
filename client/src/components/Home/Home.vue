@@ -33,7 +33,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Canvas></Canvas>
   <div class="center-col come-up">
     <h1>Chat app</h1>
     <h2>{{ `${currentSubtitle}${currentSubtitle.length < subtitle.length ? '|' : ''}` }}</h2>

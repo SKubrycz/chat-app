@@ -32,6 +32,7 @@ const checked = ref<boolean>(true)
 const canvas = ref<HTMLCanvasElement | null>(null)
 const circles = ref<Circle[]>([])
 const interval = ref<number | null>(null)
+const CIRCLE_COUNT = 8
 let circlesCount = 0
 const speedMultiplier = 12
 
@@ -125,7 +126,7 @@ const runAnimation = () => {
     return
   }
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < CIRCLE_COUNT; i++) {
     const r = 400
     const x = Math.floor(Math.random() * width.value)
     const y = Math.floor(Math.random() * height.value)
@@ -137,7 +138,6 @@ const runAnimation = () => {
     }
     createCircle(x, y, r, color)
   }
-
   interval.value = setInterval(() => {
     circles.value.forEach((el) => {
       const { direction } = el

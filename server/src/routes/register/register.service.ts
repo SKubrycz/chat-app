@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Message } from "src/types/routes";
 import { IRegister } from "./register.interface";
 

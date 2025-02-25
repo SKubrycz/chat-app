@@ -74,7 +74,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Canvas></Canvas>
   <div class="center-col come-up">
     <h1><RouterLink to="/">Chat app</RouterLink></h1>
     <Form v-slot="$form" :initial-values="loginForm" @submit="postLogin">
