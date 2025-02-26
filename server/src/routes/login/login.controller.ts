@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post, UsePipes } from "@nestjs/common";
 import { LoginService } from "./login.service";
-import type { Message } from "src/types/routes";
 import { UserLoginDto } from "./login.dto";
 import { ValidLoginPipe } from "./login.pipe";
 
@@ -9,7 +8,7 @@ export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
   @Get()
-  getLogin(): Message {
+  getLogin() {
     return this.loginService.getLogin();
   }
 

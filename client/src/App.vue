@@ -6,8 +6,11 @@ import { computed } from 'vue'
 const canvasPaths = ['/', '/login', '/register']
 const route = useRoute()
 const displayCanvas = computed(() => {
-  if (canvasPaths.includes(route.path)) return true
-  else return false
+  if (canvasPaths.includes(route.path)) {
+    console.log(route.path)
+    console.log(true)
+    return true
+  } else return false
 })
 </script>
 

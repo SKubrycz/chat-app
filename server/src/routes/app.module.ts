@@ -5,12 +5,11 @@ import { LoginModule } from "./login/login.module";
 import { RegisterModule } from "./register/register.module";
 import { APP_FILTER, APP_PIPE } from "@nestjs/core";
 import { HttpExceptionFilter } from "src/httpException.filter";
-import { ChatController } from './chat/chat.controller';
-import { ChatModule } from './chat/chat.module';
+import { ChatModule } from "./chat/chat.module";
 
 @Module({
   imports: [LoginModule, RegisterModule, ChatModule],
-  controllers: [AppController, ChatController],
+  controllers: [AppController],
   providers: [
     AppService,
     {

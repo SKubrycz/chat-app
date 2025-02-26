@@ -17,7 +17,6 @@ const setToast = (payload: ToastMessageOptions) => {
 
 const getMainChat = async () => {
   loading.value = true
-  console.log(`starting the fetch`)
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
       method: 'GET',
@@ -26,12 +25,15 @@ const getMainChat = async () => {
       },
     })
 
-    if (!res) throw new Error('Could not fetch data')
+    if (!res) {
+      handleToast(setToast, 500, 'Could not fetch data')
+      throw new Error('Could not fetch data')
+    }
+
     if (res) {
       const json = await res.json()
-      console.log(json)
       handleToast(setToast, res.status, json.message)
-      if (res.status > 299) router.push('/')
+      if (res.status === 403) router.push('/')
     }
   } catch (error) {
     if (error instanceof Error) console.error(error.message)

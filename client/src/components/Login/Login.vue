@@ -23,7 +23,12 @@ const setToast = (payload: ToastMessageOptions) => {
 
 const getLogin = async () => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, { method: 'GET' })
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     if (!res) {
       handleToast(setToast, 500, 'Could not fetch data')
       throw new Error('Could not fetch data')
