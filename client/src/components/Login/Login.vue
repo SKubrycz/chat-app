@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Canvas from '../Canvas/Canvas.vue'
 import { handleToast } from '@/plugins/AlertToast/handleToast'
 import { Button, InputText, Password, type ToastMessageOptions } from 'primevue'
 import { Form } from '@primevue/forms'

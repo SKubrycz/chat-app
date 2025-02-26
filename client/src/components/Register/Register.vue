@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Canvas from '../Canvas/Canvas.vue'
 import { Form } from '@primevue/forms'
 import { Button, InputText, Password, type ToastMessageOptions } from 'primevue'
 import { ref } from 'vue'

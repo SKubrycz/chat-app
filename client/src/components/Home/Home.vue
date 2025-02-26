@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { Button, type ToastMessageOptions } from 'primevue'
-
-import Canvas from '../Canvas/Canvas.vue'
 import AlertToast from '../Info/AlertToast.vue'
 
 const toastPayload = ref<ToastMessageOptions | null>(null)
