@@ -6,9 +6,10 @@ import { RegisterModule } from "./register/register.module";
 import { APP_FILTER, APP_PIPE } from "@nestjs/core";
 import { HttpExceptionFilter } from "src/httpException.filter";
 import { ChatModule } from "./chat/chat.module";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  imports: [LoginModule, RegisterModule, ChatModule],
+  imports: [ConfigModule.forRoot(), LoginModule, RegisterModule, ChatModule],
   controllers: [AppController],
   providers: [
     AppService,

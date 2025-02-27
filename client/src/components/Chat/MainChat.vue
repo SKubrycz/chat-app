@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { handleToast } from '@/plugins/AlertToast/handleToast'
 import type { ToastMessageOptions } from 'primevue'
+import { ProgressSpinner } from 'primevue'
 import { onBeforeMount, ref } from 'vue'
 import AlertToast from '../Info/AlertToast.vue'
 import { useRouter } from 'vue-router'
@@ -36,20 +37,26 @@ const getMainChat = async () => {
       if (res.status === 403) router.push('/')
     }
   } catch (error) {
-    if (error instanceof Error) console.error(error.message)
+    if (error instanceof Error) {
+      console.error(error.message)
+      router.push('/')
+    }
   } finally {
     templateDisplay.value = true
     loading.value = false
   }
 }
 
-onBeforeMount(() => {
-  getMainChat()
+onBeforeMount(async () => {
+  await getMainChat()
 })
 </script>
 
-<template :style="{ display: templateDisplay }">
-  <h1>Hello from chat</h1>
-  <h2>{{ loading ? '...' : `ok` }}</h2>
-  <AlertToast :toast-payload="toastPayload"></AlertToast>
+<template>
+  <ProgressSpinner v-if="loading" />
+  <div v-if="!loading" :style="{ textAlign: `center` }">
+    <h1>Hello from chat</h1>
+    <h2>ok</h2>
+    <AlertToast :toast-payload="toastPayload"></AlertToast>
+  </div>
 </template>
