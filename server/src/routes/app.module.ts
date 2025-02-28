@@ -6,28 +6,16 @@ import { RegisterModule } from "./register/register.module";
 import { APP_FILTER, APP_PIPE } from "@nestjs/core";
 import { HttpExceptionFilter } from "src/httpException.filter";
 import { ChatModule } from "./chat/chat.module";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { MongooseModule } from "@nestjs/mongoose";
-import { Connection } from "mongoose";
+import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmConfigService } from "src/typeorm.config.service";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>("DB_URL"),
-        onConnectionCreate: (connection: Connection) => {
-          connection.on("connected", () =>
-            console.log(
-              "\x1b[92m\x1b[1m" + "[MongoDB] => connected" + "\x1b[0m"
-            )
-          );
-
-          return connection;
-        },
-      }),
-      inject: [ConfigService],
+      useClass: TypeOrmConfigService,
     }),
     LoginModule,
     RegisterModule,
