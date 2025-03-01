@@ -4,7 +4,7 @@ export class UserRegisterDto {
   @IsString()
   login: string;
 
-  @IsEmail()
+  @IsEmail({}, {message: "Invalid email"})
   email: string;
 
   @IsString()

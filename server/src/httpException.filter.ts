@@ -12,6 +12,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const status = exception.getStatus();
+    const exceptionResponse = exception.getResponse();
     const date = new Date().toISOString();
 
     console.error(
@@ -20,8 +21,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
       "\x1b[0m"
     );
 
-    res.status(status).json({
-      message: exception.message,
-    });
+    if (typeof exceptionResponse === "object" && "message" in exceptionResponse) {
+      if (Array.isArray(exceptionResponse?.message)) {
+        res.status(status).json({
+          message: exceptionResponse.message[0]
+        });
+      } else {
+        res.status(status).json({
+          message: exceptionResponse.message,
+        });
+      }
+    } else {
+      res.status(status).json({
+        message: exception
+      });
+    }
+    
+    
   }
 }

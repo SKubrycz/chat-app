@@ -9,6 +9,7 @@ import { plainToInstance } from "class-transformer";
 import {
   MIN_LOGIN_LENGTH,
   MIN_PASSWORD_LENGTH,
+  PASSWORD_REGEX,
 } from "src/credentialsConstraints";
 
 @Injectable()
@@ -28,10 +29,14 @@ export class ValidRegisterPipe implements PipeTransform {
       throw new BadRequestException(
         `Password must be longer than ${MIN_PASSWORD_LENGTH - 1} characters`
       );
+      if (!password.match(PASSWORD_REGEX))
+        throw new BadRequestException(`Password does not meet requirements`);
     if (passwordAgain.length < MIN_PASSWORD_LENGTH)
       throw new BadRequestException(
         `Repeated password must be longer than ${MIN_PASSWORD_LENGTH - 1} characters`
       );
+    if (!passwordAgain.match(PASSWORD_REGEX))
+        throw new BadRequestException(`Password does not meet requirements`);
     if (password !== passwordAgain)
       throw new BadRequestException("Passwords are not the same");
 
