@@ -8,7 +8,7 @@ import { plainToInstance } from "class-transformer";
 import {
   MIN_LOGIN_LENGTH,
   MIN_PASSWORD_LENGTH,
-} from "src/credentialsConstraints";
+} from "src/credentials-constraints";
 
 export class ValidLoginPipe implements PipeTransform {
   transform(value: UserLoginDto, { metatype }: ArgumentMetadata) {

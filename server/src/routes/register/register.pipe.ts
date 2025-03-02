@@ -10,7 +10,7 @@ import {
   MIN_LOGIN_LENGTH,
   MIN_PASSWORD_LENGTH,
   PASSWORD_REGEX,
-} from "src/credentialsConstraints";
+} from "src/credentials-constraints";
 
 @Injectable()
 export class ValidRegisterPipe implements PipeTransform {
