@@ -9,12 +9,19 @@ import { ChatModule } from "./chat/chat.module";
 import { ConfigModule} from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseConfigService } from "src/mongoose.config.service";
+import { JwtModule } from "@nestjs/jwt";
+import { jwtConstants } from "./auth-constants";
 
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal: true}),
     MongooseModule.forRootAsync({
       useClass: MongooseConfigService
+    }),
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.accessToken,
+      signOptions: { expiresIn: "60s" }
     }),
     LoginModule,
     RegisterModule,

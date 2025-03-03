@@ -10,6 +10,9 @@ export declare global {
             DB_NAME: string;
             DB_USERNAME: string;
             DB_PASSWORD: string;
+
+            ACCESS_SECRET: string;
+            REFRESH_SECRET: string;
         }
     }
 }
