@@ -3,6 +3,7 @@ import { RegisterService } from './register.service';
 import { RegisterController } from './register.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/common/schemas/user.schema';
+import { EmailService } from '../email/email.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { User, UserSchema } from 'src/common/schemas/user.schema';
       }
     }])
   ],
-  providers: [RegisterService],
+  providers: [RegisterService, EmailService],
   controllers: [RegisterController]
 })
 export class RegisterModule {}
