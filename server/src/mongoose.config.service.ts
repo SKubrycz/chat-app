@@ -14,6 +14,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
             uri: uri,
             onConnectionCreate: (connection: Connection) => {
                 connection.on("connected", () => console.log("\x1b[92m\x1b[1m" + "[MongoDB] => connected" + "\x1b[0m"))
+                connection.on("disconnected", () => console.log("\x1b[91m\x1b[1m" + "[MongoDB] => disconnected" + "\x1b[0m"))
                 return connection;
             }
         }
