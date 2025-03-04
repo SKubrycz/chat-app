@@ -15,7 +15,7 @@ import { MongooseModule } from "@nestjs/mongoose";
             })
             return schema;
           }
-        }])
+        }]),
   ],
   controllers: [LoginController],
   providers: [LoginService],

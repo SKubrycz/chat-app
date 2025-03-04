@@ -6,7 +6,7 @@ import { RegisterModule } from "./register/register.module";
 import { APP_FILTER, APP_PIPE } from "@nestjs/core";
 import { HttpExceptionFilter } from "src/common/filters/http-exception.filter";
 import { ChatModule } from "./chat/chat.module";
-import { ConfigModule} from "@nestjs/config";
+import { ConfigModule, ConfigService} from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseConfigService } from "src/mongoose.config.service";
 import { JwtModule } from "@nestjs/jwt";
@@ -20,9 +20,9 @@ import { jwtConstants } from "./auth-constants";
     }),
     JwtModule.register({
       global: true,
-      secret: jwtConstants.accessToken,
+      secret: process.env.ACCESS_SECRET,
       signOptions: { expiresIn: "60s" }
-    }),
+  }),
     LoginModule,
     RegisterModule,
     ChatModule,
