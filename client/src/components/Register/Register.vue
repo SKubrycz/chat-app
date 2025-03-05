@@ -34,6 +34,7 @@ const postRegister = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: "same-origin"
     })
 
     if (!res) {

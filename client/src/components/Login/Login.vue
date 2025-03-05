@@ -54,6 +54,7 @@ const postLogin = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: "include"
     })
     if (!res) {
       throw new Error(`Could not fetch data`)

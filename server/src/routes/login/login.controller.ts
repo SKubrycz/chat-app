@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Res, UsePipes } from "@nestjs/common";
 import { LoginService } from "./login.service";
 import { UserLoginDto } from "./login.dto";
 import { ValidLoginPipe } from "./login.pipe";
+import { Response } from "express";
 
 @Controller("login")
 export class LoginController {
@@ -14,9 +15,9 @@ export class LoginController {
 
   @Post()
   @UsePipes(ValidLoginPipe)
-  async postLogin(@Res({passthrough: true}) response, @Body() userLoginDto: UserLoginDto) {
+  async postLogin(@Res({passthrough: true}) res: Response, @Body() userLoginDto: UserLoginDto) {
 
     
-    return this.loginService.postLogin(response, userLoginDto);
+    return this.loginService.postLogin(res, userLoginDto);
   }
 }
